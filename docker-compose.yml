@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nginx:
+    image: banpu/nginx-web:latest
+    depends_on:
+      - web
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - banpu
+    volumes:
+      - assets:/var/www
+    tty: true
+    stdin_open: true
+    privileged: true
+  web:
+    image: banpu/banpu-web:latest
+    networks:
+      - banpu
+    volumes:
+      - assets:/banpu/dist
+    tty: true
+    stdin_open: true
+networks:
+  default:
+    external:
+      name: bridge
+
+  banpu:
+    driver: bridge
+
+volumes:
+  assets:
+    driver: local
