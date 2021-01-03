@@ -17,9 +17,26 @@ services:
       - web
     ports:
       - '80:80'
-      - '443:443'
+      # - '443:443'
     volumes:
       - assets:/var/www
+    environment:
+      TZ: $TIME_ZONE
+      LANG: $LANG
+    networks:
+      - banpu
+    tty: true
+    stdin_open: true
+    privileged: true
+  nginx-ssl:
+    image: banpu/banpu-nginx:latest
+    depends_on:
+      - nginx
+      - varnish
+    ports:
+      - '443:443'
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
     environment:
       TZ: $TIME_ZONE
       LANG: $LANG
