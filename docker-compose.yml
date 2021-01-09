@@ -13,8 +13,8 @@ services:
     stdin_open: true
   nginx:
     image: banpu/banpu-nginx:latest
-    depends_on:
-      - web
+    # depends_on:
+    #   - web
     ports:
       - '80:80'
       - '443:443'
@@ -28,28 +28,11 @@ services:
     tty: true
     stdin_open: true
     privileged: true
-  # nginx-ssl:
-  #   image: banpu/banpu-nginx:latest
-  #   depends_on:
-  #     - nginx
-  #     - varnish
-  #   ports:
-  #     - '443:443'
-  #   volumes:
-  #     - ./nginx/conf.d:/etc/nginx/conf.d
-  #   environment:
-  #     TZ: $TIME_ZONE
-  #     LANG: $LANG
-  #   networks:
-  #     - banpu
-  #   tty: true
-  #   stdin_open: true
-  #   privileged: true
   varnish:
     image: banpu/banpu-varnish:latest
-    depends_on:
-      - web
-      - nginx
+    # depends_on:
+    #   - web
+    #   - nginx
     ports:
       - '8080:8080'
     volumes:
